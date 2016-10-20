@@ -21,6 +21,9 @@ class Treefrog < Formula
   end
 
   test do
-    system "make", "-C", "src/test", "test"
+    cd "src/test" do
+      system "qmake"
+      system "make", "test"
+    end
   end
 end
