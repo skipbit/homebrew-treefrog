@@ -4,7 +4,9 @@ class Treefrog < Formula
   url "https://github.com/treefrogframework/treefrog-framework.git", :tag => "v1.13.0", :revision => "dad8d4bbb4ae0bfb480352fde3ba5dd1321ccff8"
   head "https://github.com/treefrogframework/treefrog-framework.git", :branch => "master"
 
-  depends_on "qt5" => :build
+  depends_on MinimumMacOSRequirement => :el_capitan
+  depends_on XcodeRequirement => [:build, :version => ">= 8.0"]
+  depends_on "qt5" => ["with-mysql", "with-oci", "with-postgresql"]
 
   def install
     system "./configure", "--prefix=#{prefix}"
