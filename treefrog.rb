@@ -14,7 +14,7 @@ class Treefrog < Formula
   depends_on XcodeRequirement => [:build, :version => ">= 8.0"]
 
   qtopts = ["with-postgresql"]
-  qtopts << "with-oci" if build.with? "oci" and ENV["ORACLE_HOME"]
+  qtopts << "with-oci" if build.with?("oci") && ENV["ORACLE_HOME"]
   qtopts << "with-mysql" if build.with? "mysql"
   depends_on "qt5" => qtopts
 
@@ -33,7 +33,7 @@ class Treefrog < Formula
       args << "--enable-mongo"
     end
 
-    system "./configure", args
+    system "./configure", *args
 
     cd "src" do
       system "make"
