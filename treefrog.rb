@@ -47,9 +47,17 @@ class Treefrog < Formula
   end
 
   test do
-    cd "src/test" do
-      system "qmake"
-      system "make", "test"
+    cd testpath do
+      system "tspawn", "new", "hello"
+      assert File.exist?("hello")
+      cd "hello" do
+        assert File.exist?("hello.pro")
+        system "qmake"
+        assert File.exist?("Makefile")
+        system "make"
+        system "treefrog", "-d", "-e", "dev"
+        system "treefrog", "-k", "stop"
+      end
     end
   end
 end
