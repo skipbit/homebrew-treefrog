@@ -4,12 +4,36 @@ class Treefrog < Formula
   url "https://github.com/treefrogframework/treefrog-framework.git", :tag => "v1.13.0", :revision => "dad8d4bbb4ae0bfb480352fde3ba5dd1321ccff8"
   head "https://github.com/treefrogframework/treefrog-framework.git", :branch => "master"
 
+  option "with-debug", "build with debug information"
+  option "with-gui", "build and link with QtGui module"
+  option "with-mongo", "build with MongoDB driver library"
+  option "with-mysql", "enable --with-mysql option for Qt build"
+  option "with-oci", "enable --with-oci option for Qt build"
+
   depends_on MinimumMacOSRequirement => :el_capitan
   depends_on XcodeRequirement => [:build, :version => ">= 8.0"]
-  depends_on "qt5" => ["with-mysql", "with-oci", "with-postgresql"]
+
+  qtopts = ["with-postgresql"]
+  qtopts << "with-oci" if build.with? "oci" and ENV["ORACLE_HOME"]
+  qtopts << "with-mysql" if build.with? "mysql"
+  depends_on "qt5" => qtopts
 
   def install
-    system "./configure", "--prefix=#{prefix}"
+    args = ["--prefix=#{prefix}"]
+
+    if build.with? "debug"
+      args << "--enable-debug"
+    end
+
+    if build.with? "gui"
+      args << "--enable-gui-mod"
+    end
+
+    if build.with? "mongo"
+      args << "--enable-mongo"
+    end
+
+    system "./configure", args
 
     cd "src" do
       system "make"
