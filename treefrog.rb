@@ -9,13 +9,15 @@ class Treefrog < Formula
   option "with-mongo", "build with MongoDB driver library"
   option "with-mysql", "enable --with-mysql option for Qt build"
   option "with-oci", "enable --with-oci option for Qt build"
+  option "with-postgresql", "enable --with-postgresql option for Qt build"
 
   depends_on MinimumMacOSRequirement => :el_capitan
   depends_on XcodeRequirement => [:build, :version => ">= 8.0"]
 
-  qtopts = ["with-postgresql"]
+  qtopts = []
   qtopts << "with-oci" if build.with?("oci") && ENV["ORACLE_HOME"]
-  qtopts << "with-mysql" if build.with? "mysql"
+  qtopts << "with-mysql" if build.with?("mysql")
+  qtopts << "with-postgresql" if build.with?("postgresql")
   depends_on "qt5" => qtopts
 
   def install
