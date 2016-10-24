@@ -54,7 +54,7 @@ class Treefrog < Formula
       assert File.exist?("hello")
       cd "hello" do
         assert File.exist?("hello.pro")
-        system "qmake"
+        system HOMEBREW_PREFIX/"opt/qt5/bin/qmake"
         assert File.exist?("Makefile")
         system "make"
         system "treefrog", "-d", "-e", "dev"
