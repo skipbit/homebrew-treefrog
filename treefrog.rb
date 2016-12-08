@@ -7,7 +7,6 @@ class Treefrog < Formula
 
   option "with-debug", "build with debugging information"
   option "with-mysql", "enable --with-mysql option for Qt build"
-  option "with-oci", "enable --with-oci option for Qt build"
   option "with-postgresql", "enable --with-postgresql option for Qt build"
   option "with-qt-gui", "build and link with QtGui module"
 
@@ -16,7 +15,6 @@ class Treefrog < Formula
 
   qt5_build_options = []
   qt5_build_options << "with-mysql" if build.with?("mysql")
-  qt5_build_options << "with-oci" if build.with?("oci")
   qt5_build_options << "with-postgresql" if build.with?("postgresql")
   depends_on "qt5" => qt5_build_options
 
